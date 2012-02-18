@@ -1,28 +1,74 @@
 <html>
 <head>
-  <style>
-  </style>
+  <title>Checkins over time</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
   <script src="https://singly.com/js/api.js" type="text/javascript"></script>
   <script type="text/javascript">
     $(function() {
       var client = new APIClient();
-      // get some photos
-      client.getJSON('/Me/places', {limit: 20}, function(places) {
+
+      client.getJSON('/Me/places', {limit: 1000}, function(places) {
         console.log('found ' + places.length + ' places');
-        // add them to the DOM
-        for(var i in places) {
-          var checkinDate = new Date(places[i].date * 1000);
-          var checkinMonth = checkinDate.getMonth();
-          var checkinDay = checkinDate.getDay();
-          var checkinYear = checkinDate.getFullYear();
-          console.log('places #' + i, places[i]);
-          $('body').append('<p>' + places[i].title + ' on ' + checkinMonth + ' ' + checkinDay + ', ' + checkinYear +'</p>');
+
+        var idx, yr, mo, byear=2009, eyear=2012, months=(eyear-byear+1) * 12, data=[];
+          
+        //fill an array with data for the histogram
+        for (var i = 0; i < months; i+= 1){
+          data[i] = 0;
         }
+
+        var mnames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        for(var i in places) {
+          var checkinDate = new Date(places[i].at);
+
+          mo = mnames[checkinDate.getMonth()];
+          day = checkinDate.getDay();
+          yr = checkinDate.getFullYear();
+          console.log('places #' + i, places[i], checkinDate);
+
+          idx = (parseInt(yr)-byear) * 12 + parseInt(checkinDate.getMonth()) - 1;
+
+          data[idx] +=1;
+
+        // add them to the DOM
+          $('body').append('<p>' + places[i].title + ' on ' + mo + ' ' + day + ', ' + yr + ' ' + '</p>');
+        }
+
+        var max = 0;
+        for (var i = 0; i < data.length; i++){
+          if (data[i] > max){ max = data[i];}
+        }
+        console.log(max);
+
+        var percent = 0,  perdata=[];
+
+        for (var i = 0; i < data.length; i++){
+          perdata[i] = data[i]/max;
+
+        }
+        console.log(perdata);
+        console.log(data);
+
+        for (var i in data){
+          console.log(data[i]/max);
+          $('.histogram').append('<img src="bar.gif" height="' + data[i]/max * 200 + '">&nbsp;');
+        }
+
+        $('stats').append('You\'ve checked in ' + places.length + ' times since January 2009');
+
       });
     });
   </script>
 </head>
 <body>
+  <div id="catchphrase">
+    Your checkins over time
+  </div>
+  <div class="histogram">
+  </div>
+  <div class="stats">
+  </div>
 </body>
 </html>
