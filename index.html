@@ -12,8 +12,12 @@
         console.log('found ' + places.length + ' places');
         // add them to the DOM
         for(var i in places) {
+          var checkinDate = new Date(places[i].date * 1000);
+          var checkinMonth = checkinDate.getMonth();
+          var checkinDay = checkinDate.getDay();
+          var checkinYear = checkinDate.getFullYear();
           console.log('places #' + i, places[i]);
-          $('body').append('<p>' + places[i].title + '</p>');
+          $('body').append('<p>' + places[i].title + ' on ' + checkinMonth + ' ' + checkinDay + ', ' + checkinYear +'</p>');
         }
       });
     });
