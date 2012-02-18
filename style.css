@@ -17,9 +17,10 @@ img{
 }
 .histogram{
 	margin-top: 50px;
+	margin-bottom: 25px;
 	margin-left: auto;
 	margin-right: auto;
-	width: 40%;
+	width: 80%;
 }
 div#catchphrase{
 	margin-top: 110px;
@@ -30,5 +31,6 @@ div#catchphrase{
 	font-color: #000;
 }
 .stats{
-	font-size: 1.2em;
+	font-size: 1.0em;
+	margin-left: 10%;
 }

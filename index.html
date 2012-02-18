@@ -8,7 +8,7 @@
     $(function() {
       var client = new APIClient();
 
-      client.getJSON('/Me/places', {limit: 1000}, function(places) {
+      client.getJSON('/Me/places', {limit: 4000}, function(places) {
         console.log('found ' + places.length + ' places');
 
         var idx, yr, mo, byear=2009, eyear=2012, months=(eyear-byear+1) * 12, data=[];
@@ -31,32 +31,13 @@
           idx = (parseInt(yr)-byear) * 12 + parseInt(checkinDate.getMonth()) - 1;
 
           data[idx] +=1;
-
-        // add them to the DOM
-          $('body').append('<p>' + places[i].title + ' on ' + mo + ' ' + day + ', ' + yr + ' ' + '</p>');
         }
-
-        var max = 0;
-        for (var i = 0; i < data.length; i++){
-          if (data[i] > max){ max = data[i];}
-        }
-        console.log(max);
-
-        var percent = 0,  perdata=[];
-
-        for (var i = 0; i < data.length; i++){
-          perdata[i] = data[i]/max;
-
-        }
-        console.log(perdata);
-        console.log(data);
 
         for (var i in data){
-          console.log(data[i]/max);
-          $('.histogram').append('<img src="bar.gif" height="' + data[i]/max * 200 + '">&nbsp;');
+          $('.histogram').append('<img src="bar.gif" height="' + data[i]/places.length * 1000 + '">&nbsp;');
         }
 
-        $('stats').append('You\'ve checked in ' + places.length + ' times since January 2009');
+        $('.stats').append('You have checked in ' + places.length + ' times between January 2009 and December 2012');
 
       });
     });
