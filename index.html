@@ -20,6 +20,11 @@
 
         var mnames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+        var lastCheckin = places[places.length - 1];
+        
+        var firstCheckinT = new Date(places[0].at);
+        var lastCheckinT = new Date(places[places.length - 1].at);
+
         for(var i in places) {
           var checkinDate = new Date(places[i].at);
 
@@ -37,7 +42,7 @@
           $('.histogram').append('<img src="bar.gif" height="' + data[i]/places.length * 1000 + '">&nbsp;');
         }
 
-        $('.stats').append('You have checked in ' + places.length + ' times between January 2009 and December 2012');
+        $('.stats').append('<p>You have checked in ' + places.length + ' times between ' + mnames[firstCheckinT.getMonth()] + ' ' + firstCheckinT.getFullYear() + ' and ' + mnames[lastCheckinT.getMonth()] + ' ' + lastCheckinT.getFullYear() + '</p><p><em>You were most recently at '+ lastCheckin.title + '</em></p>');
 
       });
     });
