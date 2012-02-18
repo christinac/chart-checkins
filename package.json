@@ -1,6 +1,7 @@
 {
-  "version": "0.1",
-  "description": "See a histogram of your checkins over time",
+  "name": "Hello (Singly's) World",
+  "version": "0.0.0",
+  "description": "Displays a histogram of your checkins between January 2009 and December 2012",
   "repository": {
     "title": "Checkins over time",
     "uses": {
