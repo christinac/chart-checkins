@@ -1,0 +1,31 @@
+<html>
+<head>
+  <style>
+  img {
+    /* upside down! */
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    max-width:300px;
+    max-height:300px;
+  }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+  <script src="https://singly.com/js/api.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(function() {
+      var client = new APIClient();
+      // get some photos
+      client.getJSON('/Me/photos', {limit: 10}, function(photos) {
+        console.log('found ' + photos.length + ' photos');
+        // add them to the DOM
+        for(var i in photos) {
+          console.log('photo #' + i, photos[i]);
+          $('body').append('<img src="' + photos[i].url + '">');
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+</body>
+</html>
